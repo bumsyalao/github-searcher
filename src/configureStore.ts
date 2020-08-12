@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, Store } from 'redux';
 import thunk from 'redux-thunk';
-import { persistStore, persistReducer, Persistor } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 import rootReducer from './reducers/rootReducer';
@@ -10,23 +10,24 @@ const persistConfig = {
   storage,
 }
 
+
+type ApplicationState = {
+  result: Object
+}
+
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-export default () => {
-  let store = createStore(
-    persistedReducer,
-    compose(
-      applyMiddleware(thunk),
-      (window as any).__REDUX_DEVTOOLS_EXTENSION__
-        ? (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-        : (functional: any) => functional
-    )
-  );
-  let persistor = persistStore(store)
-  return newFunction(store, persistor)
-}
 
-function newFunction(store, persistor: Persistor) {
-  return { store, persistor };
-}
+// export default () => {
+const store: Store<ApplicationState> = createStore(
+  persistedReducer,
+  compose<any>(
+    applyMiddleware(thunk),
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__
+      ? (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+      : (functional: any) => functional
+  )
+);
+export let persistor = persistStore(store)
 
+export default store
