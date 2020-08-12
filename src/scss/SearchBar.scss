@@ -47,7 +47,7 @@
       text-align: center;
       padding: 4px;
       margin-left: 14px;
-      display: inline-block;
+      display: flex;
       overflow: hidden;
       width: 20%;
       border: 0.1px solid grey;
@@ -100,8 +100,6 @@
           width: 100%;
           color: #394349;
           outline: none;
-          outline: 2px solid -webkit-focus-ring-color;
-          outline-offset: -2px;
         }
 
         option {

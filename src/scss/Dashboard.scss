@@ -1,0 +1,25 @@
+.dashboard {
+  margin-top: 50px;
+  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, minmax(215px, 1fr));
+  grid-gap: 15px;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    border: 0.5px solid #D6D6D6;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+}
