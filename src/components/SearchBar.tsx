@@ -6,9 +6,11 @@ type MyState = {
   search: string;
   filter: string;
 };
-type MyProps = {};
+type MyProps = {
+  onSearch: any;
+};
 
-// let timerId;
+let timerId;
 class SearchBar extends React.Component<MyProps, MyState>{
   constructor(props: MyProps) {
     super(props);
@@ -22,6 +24,9 @@ class SearchBar extends React.Component<MyProps, MyState>{
     this.setState({ search: e.target.value });
     if (this.state.search.length < 3) {
       return;
+    } else {
+      clearTimeout(timerId);
+      timerId = setTimeout(() => this.props.onSearch(this.state.search, 2000))
     }
   }
 
@@ -31,7 +36,6 @@ class SearchBar extends React.Component<MyProps, MyState>{
   }
 
   render() {
-    console.log(this.state.search, this.state.filter, '=====wtf')
     return (
       <section className="search-bar">
         <div className='heading'>
@@ -64,5 +68,4 @@ class SearchBar extends React.Component<MyProps, MyState>{
     );
   }
 }
-
 export default SearchBar;
