@@ -4,12 +4,11 @@ import SearchBar from './components/SearchBar';
 import Dashboard from './components/Dashboard';
 import { getSearchResults, searchUser, searchRepos } from './actions/appAction';
 
-type MyState = {
-  searchResult: Object
-};
+type MyState = {};
 type MyProps = {
   searchUser: any;
   searchRepos: any;
+  searchResult: Object;
 };
 
 class App extends React.Component<MyProps, MyState> {
@@ -25,12 +24,13 @@ class App extends React.Component<MyProps, MyState> {
     } catch (err) { console.log(err, '===error') }
   }
   render() {
-    console.log(this.props, '====nick')
-
+    const { searchResult } = this.props;
     return (
       <div className='App'>
         <SearchBar onSearch={this.onSearch} />
-        <Dashboard message={''} />
+        {searchResult &&
+          <Dashboard searchResult={searchResult} />
+        }
       </div>
     )
   }

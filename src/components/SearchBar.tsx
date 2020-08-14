@@ -72,7 +72,7 @@ class SearchBar extends React.Component<MyProps, MyState>{
               <option value="user">User</option>
               <option value="repository">Repository</option>
             </select>
-            <Icon path={mdiMenuDown} title="dropdown" size={1} />
+            <Icon path={mdiMenuDown} title="dropdown" size={1} className="dropdown-icon" />
           </div>
         </div>
       </section>

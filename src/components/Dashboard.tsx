@@ -1,14 +1,23 @@
 import React from 'react';
+import ResultCard from './ResultCard';
 
-type DashboardProps = { message: string };
+type MyState = {};
+type MyProps = {
+  searchResult: Object
+};
 
-const Dashboard = ({ message }: DashboardProps) => (
-  <div className="dashboard">
-    <div className="result-card">{message}</div>
-    <div className="result-card"></div>
-    <div className="result-card"></div>
-    <div className="result-card"></div>
-    <div className="result-card"></div>
-  </div>);
+class Dashboard extends React.Component<MyProps, MyState>{
+  render() {
+    return (
+      <div className="dashboard">
+        <p>Showing {this.props.searchResult.total_count} results...</p>
+        {this.props.searchResult.items.map((result) => (
+          <ResultCard searchResult={result} />
+        ))}
+      </div>
+    )
+  }
+
+}
 
 export default Dashboard;

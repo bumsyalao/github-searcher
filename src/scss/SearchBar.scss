@@ -39,7 +39,7 @@
       padding: 12px;
       outline: none;
       width: 50%;
-      border: 0.1px solid grey;
+      border: 1px solid #dadce0;
       border-radius: 3px;
     }
 
@@ -50,7 +50,7 @@
       display: flex;
       overflow: hidden;
       width: 20%;
-      border: 0.1px solid grey;
+      border: 1px solid #dadce0;
       border-radius: 3px;
 
       &:before,
@@ -92,6 +92,7 @@
         background: rgba(0, 0, 0, 0) !important;
         /* "transparent" doesn't work with Opera */
         border: 0;
+        cursor: pointer;
         border-radius: 0;
         -webkit-appearance: none;
 
@@ -110,6 +111,10 @@
           border-radius: 3px;
           cursor: pointer;
         }
+      }
+
+      .dropdown-icon {
+        color: blue !important;
       }
     }
   }
