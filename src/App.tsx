@@ -2,26 +2,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './components/SearchBar';
 import Dashboard from './components/Dashboard';
-import { getSearchResults, searchUser } from './actions/appAction';
+import { getSearchResults, searchUser, searchRepos } from './actions/appAction';
 
 type MyState = {
   searchResult: Object
 };
 type MyProps = {
   searchUser: any;
+  searchRepos: any;
 };
 
 class App extends React.Component<MyProps, MyState> {
 
-  componentDidMount() {
-    // this.pointer = 3;
-  }
-  onSearch = (search) => {
-    this.props.searchUser(search).then((res) => {
-      console.log(res, '=====what?');
-    })
+  onSearch = async (search, filter) => {
+    try {
+      if (filter === 'repository') {
+        await this.props.searchRepos(search);
+      }
+      else {
+        await this.props.searchUser(search);
+      }
+    } catch (err) { console.log(err, '===error') }
   }
   render() {
+    console.log(this.props, '====nick')
+
     return (
       <div className='App'>
         <SearchBar onSearch={this.onSearch} />
@@ -37,4 +42,4 @@ const mapStateToProps = (state: MyState) => ({
 });
 
 
-export default connect(mapStateToProps, { searchUser, getSearchResults })(App);
+export default connect(mapStateToProps, { searchUser, getSearchResults, searchRepos })(App);

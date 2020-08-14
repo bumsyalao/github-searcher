@@ -5,18 +5,20 @@ import ReactDOM from 'react-dom';
 import store, { persistor } from './configureStore';
 import './scss/index.scss';
 import App from './App';
+import Loading from './components/Loading';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-    <App />
-    </PersistGate>
-    // </Provider> 
+      <PersistGate loading={<Loading />} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -1,9 +1,11 @@
 /* eslint-disable */
 
 import express, { Request, Response } from "express";
+import cors from 'cors';
 import { getRepositories, getUser } from './routes';
 
 const app = express()
+app.use(cors())
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Hello World!");

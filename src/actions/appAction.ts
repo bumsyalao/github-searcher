@@ -22,3 +22,12 @@ export const searchUser = (search) => dispatch => {
       throw err;
     });
 }
+
+export const searchRepos = (search) => dispatch => {
+  axios.get(`http://localhost:8000/get-repository?search=${search}`)
+    .then((res) => {
+      dispatch(getSearchResults(res.data))
+    }).catch((err) => {
+      throw err;
+    });
+}

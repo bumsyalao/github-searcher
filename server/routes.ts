@@ -6,6 +6,7 @@ const redisClient = redis.createClient()
 redisClient.on('connect', () => { console.log("Redis connection successful") })
 
 //Api function to get repostories and store in redis cache
+//add documentThis documentation !!!!!!!!!!!!!!!!!!!!!!!!!!!
 export const getRepositories = async (req, res) => {
   const search = req.query.search
   try {

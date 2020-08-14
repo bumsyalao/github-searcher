@@ -21,18 +21,29 @@ class SearchBar extends React.Component<MyProps, MyState>{
   }
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { search, filter } = this.state;
     this.setState({ search: e.target.value });
     if (this.state.search.length < 3) {
       return;
     } else {
       clearTimeout(timerId);
-      timerId = setTimeout(() => this.props.onSearch(this.state.search, 2000))
+      timerId = setTimeout(() =>
+        this.props.onSearch(search, filter)
+        , 2000)
     }
   }
 
   handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     this.setState({ filter: e.currentTarget.value });
+    if (this.state.search.length < 3) {
+      return;
+    } else {
+      clearTimeout(timerId);
+      timerId = setTimeout(() =>
+        this.props.onSearch(this.state.search, this.state.filter)
+        , 2000)
+    }
   }
 
   render() {
