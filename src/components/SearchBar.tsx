@@ -5,9 +5,10 @@ import { mdiGithub, mdiMenuDown } from '@mdi/js';
 type MyState = {
   search: string;
   filter: string;
+  loading: boolean;
 };
 type MyProps = {
-  onSearch: any;
+  onSearch: Function;
 };
 
 let timerId;
@@ -16,7 +17,9 @@ class SearchBar extends React.Component<MyProps, MyState>{
     super(props);
     this.state = {
       search: '',
-      filter: 'user'
+      filter: 'user',
+      loading: false,
+
     };
   }
 
@@ -27,9 +30,13 @@ class SearchBar extends React.Component<MyProps, MyState>{
       return;
     } else {
       clearTimeout(timerId);
-      timerId = setTimeout(() =>
-        this.props.onSearch(search, filter)
+      timerId = setTimeout(async () => {
+        this.setState({ loading: true })
+        await this.props.onSearch(search, filter);
+        this.setState({ loading: false })
+      }
         , 2000)
+
     }
   }
 
@@ -40,9 +47,13 @@ class SearchBar extends React.Component<MyProps, MyState>{
       return;
     } else {
       clearTimeout(timerId);
-      timerId = setTimeout(() =>
-        this.props.onSearch(this.state.search, this.state.filter)
+      timerId = setTimeout(async () => {
+        this.setState({ loading: true })
+        await this.props.onSearch(this.state.search, this.state.filter);
+        this.setState({ loading: false })
+      }
         , 2000)
+
     }
   }
 
@@ -75,6 +86,8 @@ class SearchBar extends React.Component<MyProps, MyState>{
             <Icon path={mdiMenuDown} title="dropdown" size={1} className="dropdown-icon" />
           </div>
         </div>
+        {this.state.loading ? <p className="loading__p">fetching results...</p> : ''}
+
       </section>
     );
   }

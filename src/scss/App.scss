@@ -1,8 +1,13 @@
+html,
+body {
+  min-width: max-content;
+}
+
 body {
   padding: 5%;
   padding-top: 20px;
   font-family: 'Open Sans', sans-serif;
-  // background-color: #fbfefb;
+  background-color: #f6f8fa;
 }
 
 .App {

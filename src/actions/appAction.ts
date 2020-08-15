@@ -15,7 +15,7 @@ export const getSearchResults = (searchResults: Object): IgetSearchResults => ({
 })
 
 export const searchUser = (search) => dispatch => {
-  axios.get(`http://localhost:8000/get-user?search=${search}`)
+  return axios.get(`http://localhost:8000/get-user?search=${search}`)
     .then((res) => {
       dispatch(getSearchResults(res.data))
     }).catch((err) => {
@@ -24,7 +24,7 @@ export const searchUser = (search) => dispatch => {
 }
 
 export const searchRepos = (search) => dispatch => {
-  axios.get(`http://localhost:8000/get-repository?search=${search}`)
+  return axios.get(`http://localhost:8000/get-repository?search=${search}`)
     .then((res) => {
       dispatch(getSearchResults(res.data))
     }).catch((err) => {

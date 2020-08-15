@@ -8,28 +8,27 @@ type MyState = {};
 type MyProps = {
   searchUser: any;
   searchRepos: any;
-  searchResult: Object;
+  searchResults: any;
 };
 
 class App extends React.Component<MyProps, MyState> {
 
   onSearch = async (search, filter) => {
-    try {
-      if (filter === 'repository') {
-        await this.props.searchRepos(search);
-      }
-      else {
-        await this.props.searchUser(search);
-      }
-    } catch (err) { console.log(err, '===error') }
+    if (filter === 'repository') {
+      return this.props.searchRepos(search);
+    }
+    else {
+      return this.props.searchUser(search);
+    }
   }
   render() {
-    const { searchResult } = this.props;
+    const { searchResults } = this.props.searchResults.appReducer;
+    console.log(searchResults, this.props.searchResults.appReducer, '=====im here')
     return (
       <div className='App'>
         <SearchBar onSearch={this.onSearch} />
-        {searchResult &&
-          <Dashboard searchResult={searchResult} />
+        {searchResults &&
+          <Dashboard searchResult={searchResults} />
         }
       </div>
     )
