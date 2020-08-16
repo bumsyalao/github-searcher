@@ -14,14 +14,21 @@ const appReducer: Reducer<IState, IAction> = (
   state = { searchResults: {} },
   action
 ) => {
-  if (action.type === 'GET_SEARCH_RESULTS') {
-    return {
-      ...state,
-      searchResults: action.searchResults,
-    };
+  switch (action.type) {
+    case 'GET_SEARCH_RESULTS':
+      return {
+        ...state,
+        searchResults: action.searchResults,
+      };
+    case 'CLEAR_SEARCH_RESULTS':
+      {
+        return {
+          ...state,
+          searchResults: {}
+        };
+      }
+    default: return state;
   }
-
-  return state;
 }
 
 export default appReducer;

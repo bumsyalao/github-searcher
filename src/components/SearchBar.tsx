@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
 import Icon from '@mdi/react';
 import { mdiGithub, mdiMenuDown } from '@mdi/js';
 
@@ -6,9 +7,13 @@ type MyState = {
   search: string;
   filter: string;
   loading: boolean;
+  page: number;
+  perPage: number;
 };
 type MyProps = {
   onSearch: Function;
+  onClearSearch: Function;
+  searchResult: any;
 };
 
 let timerId;
@@ -19,45 +24,50 @@ class SearchBar extends React.Component<MyProps, MyState>{
       search: '',
       filter: 'user',
       loading: false,
+      page: 1,
+      perPage: 30
 
     };
   }
-
-  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { search, filter } = this.state;
-    this.setState({ search: e.target.value });
+  onFetchSearch = () => {
+    const { search, filter, page, perPage } = this.state;
     if (this.state.search.length < 3) {
+      this.props.onClearSearch();
       return;
     } else {
       clearTimeout(timerId);
       timerId = setTimeout(async () => {
         this.setState({ loading: true })
-        await this.props.onSearch(search, filter);
+        await this.props.onSearch(search, filter, page, perPage);
         this.setState({ loading: false })
       }
         , 2000)
-
     }
+  }
+
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ search: e.target.value });
+    this.onFetchSearch();
   }
 
   handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     this.setState({ filter: e.currentTarget.value });
-    if (this.state.search.length < 3) {
-      return;
-    } else {
-      clearTimeout(timerId);
-      timerId = setTimeout(async () => {
-        this.setState({ loading: true })
-        await this.props.onSearch(this.state.search, this.state.filter);
-        this.setState({ loading: false })
-      }
-        , 2000)
+    this.onFetchSearch();
+  }
+  handlePageClick = (pageData) => {
+    const selected = pageData.selected;
+    console.log(this.state.perPage, '=====what the fuck')
+    const perPage = this.state.perPage;
 
-    }
+    const page = Math.ceil(selected * perPage);
+    this.setState({ page });
+    this.onFetchSearch();
   }
 
   render() {
+    console.log(this.state.perPage)
+    const { searchResult } = this.props;
     return (
       <section className="search-bar">
         <div className='heading'>
@@ -87,7 +97,21 @@ class SearchBar extends React.Component<MyProps, MyState>{
           </div>
         </div>
         {this.state.loading ? <p className="loading__p">fetching results...</p> : ''}
-
+        <div className="result-data">
+          <p>Found {searchResult && searchResult.total_count ? searchResult.total_count : 'no'}
+            {' '} results...
+          </p>
+          {(searchResult.total_count > 10) && <ReactPaginate
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            pageCount={searchResult.total_count}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={3}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            activeClassName={'active'}
+          />}
+        </div>
       </section>
     );
   }

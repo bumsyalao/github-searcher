@@ -2,31 +2,44 @@ import React from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './components/SearchBar';
 import Dashboard from './components/Dashboard';
-import { getSearchResults, searchUser, searchRepos } from './actions/appAction';
+import {
+  getSearchResults,
+  searchUser, searchRepos, clearSearchResult
+} from './actions/appAction';
 
 type MyState = {};
 type MyProps = {
   searchUser: any;
   searchRepos: any;
   searchResults: any;
+  clearSearchResult: any;
 };
 
 class App extends React.Component<MyProps, MyState> {
 
-  onSearch = async (search, filter) => {
+  componentDidMount() {
+  }
+
+  onClearSearch = () => {
+    this.props.clearSearchResult();
+  }
+
+  onSearch = async (search, filter, page, perPage) => {
     if (filter === 'repository') {
-      return this.props.searchRepos(search);
+      return this.props.searchRepos(search, page, perPage);
     }
     else {
-      return this.props.searchUser(search);
+      return this.props.searchUser(search, page, perPage);
     }
   }
   render() {
     const { searchResults } = this.props.searchResults.appReducer;
-    console.log(searchResults, this.props.searchResults.appReducer, '=====im here')
     return (
       <div className='App'>
-        <SearchBar onSearch={this.onSearch} />
+        <SearchBar onSearch={this.onSearch}
+          searchResult={searchResults}
+          onClearSearch={this.onClearSearch}
+        />
         {searchResults &&
           <Dashboard searchResult={searchResults} />
         }
@@ -39,6 +52,6 @@ const mapStateToProps = (state: MyState) => ({
   ...state,
   searchResults: state
 });
+const actions = { searchUser, getSearchResults, searchRepos, clearSearchResult }
 
-
-export default connect(mapStateToProps, { searchUser, getSearchResults, searchRepos })(App);
+export default connect(mapStateToProps, actions)(App);

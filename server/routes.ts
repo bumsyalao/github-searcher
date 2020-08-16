@@ -14,10 +14,11 @@ export const getRepositories = async (req, res) => {
       if (cache) {
         return res.status(200).json(JSON.parse(cache))
       }
-
       const response = await axios.get('https://api.github.com/search/repositories', {
         params: {
-          q: req.query.search
+          q: req.query.search,
+          per_page: req.query.per_page || 30,
+          page: req.query.page
         }
       });
 
@@ -47,7 +48,9 @@ export const getUser = async (req, res) => {
 
       const response = await axios.get('https://api.github.com/search/users', {
         params: {
-          q: req.query.search
+          q: req.query.search,
+          per_page: req.query.per_page || 30,
+          page: req.query.page
         }
       });
 

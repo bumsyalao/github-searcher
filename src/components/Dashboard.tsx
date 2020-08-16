@@ -8,12 +8,10 @@ type MyProps = {
 
 class Dashboard extends React.Component<MyProps, MyState> {
   render() {
-    const { searchResult } = this.props;
     return (
       <div className="dashboard">
-        <p>Showing {searchResult && searchResult.total_count} results...</p>
         <div className="dashboard-card">
-          {searchResult && searchResult.items.map((result) => (
+          {this.props.searchResult.items && this.props.searchResult.items.map((result) => (
             <ResultCard searchResult={result} />
           ))}
         </div>
