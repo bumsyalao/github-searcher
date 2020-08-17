@@ -9,11 +9,12 @@ import {
 
 type MyState = {};
 type MyProps = {
-  searchUser: any;
-  searchRepos: any;
+  searchUser: Function;
+  searchRepos: Function;
   searchResults: any;
-  clearSearchResult: any;
+  clearSearchResult: Function;
 };
+
 
 /**
  * App class, renders searchBar and Dashboard
@@ -31,7 +32,7 @@ class App extends React.Component<MyProps, MyState> {
     this.props.clearSearchResult();
   }
 
-  onSearch = async (search, filter, page, perPage) => {
+  onSearch = async (search: string, filter: string, page: number, perPage: number) => {
     if (filter === 'repository') {
       return this.props.searchRepos(search, page, perPage);
     }

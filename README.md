@@ -97,7 +97,6 @@ npm start
 
 ## Limitations
 * Github API doesn't provide location key in response, so this is not displayed in the user cards.
-* Beginner knowledge of typescript.
 
 ## Screenshots
 

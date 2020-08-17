@@ -11,7 +11,7 @@ class Dashboard extends React.Component<MyProps, MyState> {
     return (
       <div className="dashboard">
         <div className="dashboard-card">
-          {this.props.searchResult.items && this.props.searchResult.items.map((result) => (
+          {this.props.searchResult.items && this.props.searchResult.items.map((result: any) => (
             <ResultCard searchResult={result} />
           ))}
         </div>

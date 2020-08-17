@@ -88,13 +88,12 @@ class SearchBar extends React.Component<MyProps, MyState>{
    *
    * @memberof SearchBar
    */
-  handlePageClick = (pageData) => {
+  handlePageClick = (pageData: any) => {
     const page = pageData.selected;
     this.setState({ page }, this.onFetchSearch);
   }
 
   render() {
-    console.log(this.state.perPage)
     const { searchResult } = this.props;
     return (
       <section className="search-bar">
