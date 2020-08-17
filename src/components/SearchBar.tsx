@@ -31,11 +31,21 @@ class SearchBar extends React.Component<MyProps, MyState>{
       search: '',
       filter: 'user',
       loading: false,
-      page: 1,
+      page: 0,
       perPage: 30
 
     };
   }
+  /**
+   * Fetch function calls onSearch and onClearSearch
+   * Clears search result if the input value has less than 3chars
+   * clearTimeout and reset timerId.
+   * setTimeout/timerId to 5miliseconds (time for user to type)
+   * set loading state to true until api call is completed
+   * Calls onSearch function with search param, filter, page, perpage.
+   *
+   * @memberof SearchBar
+   */
   onFetchSearch = () => {
     const { search, filter, page, perPage } = this.state;
     if (this.state.search.length < 3) {
@@ -45,29 +55,42 @@ class SearchBar extends React.Component<MyProps, MyState>{
       clearTimeout(timerId);
       timerId = setTimeout(async () => {
         this.setState({ loading: true })
-        await this.props.onSearch(search, filter, page, perPage);
+        await this.props.onSearch(search, filter, page + 1, perPage);
         this.setState({ loading: false })
       }
-        , 2000)
+        , 500)
     }
   }
-
+  /**
+   * onChange Function for input elemnt
+   * setState with a call back, so onFetchSearch is called with the new state value
+   *
+   * @memberof SearchBar
+   */
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ search: e.target.value });
-    this.onFetchSearch();
+    this.setState({ search: e.target.value, page: 0 }, this.onFetchSearch);
   }
 
+  /**
+   * onChange Function for select element
+   * setState with a call back, so onFetchSearch is called with the new state value
+   *
+   * @memberof SearchBar
+   */
   handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    this.setState({ filter: e.currentTarget.value });
-    this.onFetchSearch();
+    this.setState({ filter: e.currentTarget.value, page: 0 }, this.onFetchSearch);
   }
+
+  /**
+   * onChange Function for paginate element
+   * setState with a call back, so onFetchSearch is called with the new state value
+   *
+   * @memberof SearchBar
+   */
   handlePageClick = (pageData) => {
-    const selected = pageData.selected;
-    const perPage = this.state.perPage;
-    const page = Math.ceil(selected * perPage);
-    this.setState({ page });
-    this.onFetchSearch();
+    const page = pageData.selected;
+    this.setState({ page }, this.onFetchSearch);
   }
 
   render() {
@@ -104,12 +127,12 @@ class SearchBar extends React.Component<MyProps, MyState>{
         {this.state.loading ? <p className="loading__p">fetching results...</p> : ''}
         <div className="result-data">{searchResult.total_count ?
           <p>Found {searchResult && searchResult.total_count ? searchResult.total_count : 'no'}
-            {' '} results...
+            {' '} results
           </p> : ''}
           {(searchResult.total_count > 10) && <ReactPaginate
             previousLabel={'prev'}
             nextLabel={'next'}
-            pageCount={searchResult.total_count}
+            pageCount={searchResult.total_count / this.state.perPage}
             marginPagesDisplayed={1}
             pageRangeDisplayed={3}
             onPageChange={this.handlePageClick}

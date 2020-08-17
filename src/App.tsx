@@ -24,6 +24,7 @@ type MyProps = {
 class App extends React.Component<MyProps, MyState> {
 
   componentDidMount() {
+    this.props.clearSearchResult();
   }
 
   onClearSearch = () => {
