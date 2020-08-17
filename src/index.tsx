@@ -5,14 +5,13 @@ import ReactDOM from 'react-dom';
 import store, { persistor } from './configureStore';
 import './scss/index.scss';
 import App from './App';
-import Loading from './components/Loading';
 import * as serviceWorker from './serviceWorker';
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={<Loading />} persistor={persistor}>
+      <PersistGate loading="loading" persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>

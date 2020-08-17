@@ -1,44 +1,95 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Github-searcher
 
-## Available Scripts
+Search through github users and repository.
 
-In the project directory, you can run:
+## Table of Contents
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Click to expand) -->
+<details>
+<summary>Click to expand</summary>
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- [Development](#development)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Documentation](#documentation)
+- [Structure](#structure)
+- [Screenshots](#screenshots)
+- [Limitations](#Limitations)
+- [ToDo](#Todo)
 
-### `yarn test`
+</details>
+<!-- AUTO-GENERATED-CONTENT:END -->
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Development
+This single page application was built with:
+- ReactJS.
+- TypeScript.
+- Redux-persist to persist and rehydrate redux store.
+- ExpressJS.
+- REDIS to cache persisted data on the server-side.
+- SASS
 
-### `yarn build`
+## Installation
+Github-searcher requires 
+- [Node.js](https://nodejs.org) version 8 or above.
+- [Redis](https://redis.io/).
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Install all dependencies:
+```bash
+npm install
+```
+Start server on http://localhost:8000/
+```bash
+npm run start-dev
+```
+Start React-Redux app on http://localhost:3000/
+```bash
+npm start 
+```
+## Usage
+- Enter 3 or more characters to search github user or repository.
+- Filter search by choosing users or repository.
+- Results are paginated to allow you browse through multiple pages.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Documentation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Structure
+### Folder structure
+    ├── public
+    │   └── index.html
+    ├── server
+    │   ├── routes.ts
+    │   └── server.ts
+    │── src
+    │   ├── __test__
+    │   │   └── App.test.tsx     
+    │   ├── actions
+    │   │   └── appActions.ts
+    │   ├── components
+    │   │   ├── Dashboard.tsx
+    │   │   ├── ResultCard.tsx
+    │   │   └── SearchBar.tsx         
+    │   ├── reducers
+    │   │   ├── appReducer.ts
+    │   │   └── rootReducer.tsx
+    │   ├── scss
+    │   │   ├── App.scss
+    │   │   ├── Dashboard.scss
+    │   │   ├── index.scss
+    │   │   └── SearchBar.scss
+    │   ├── App.tsx
+    │   ├── configureStore.ts
+    │   └──index.tsx 
+    ├── package.json
+    ├── tsconfig.json
+    ├── README.md
+    └── tsconfig.server.json
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Screenshots
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![index page](https://res.cloudinary.com/dcpfdxsly/image/upload/v1597677602/Screenshot_2020-08-17_at_16.56.18_oacpdg.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![search page](https://res.cloudinary.com/dcpfdxsly/image/upload/v1597677603/Screenshot_2020-08-17_at_19.04.47_a1ys4x.png)

@@ -15,6 +15,12 @@ type MyProps = {
   clearSearchResult: any;
 };
 
+/**
+ * App class, renders searchBar and Dashboard
+ *
+ * @class App
+ * @extends {React.Component<MyProps, MyState>}
+ */
 class App extends React.Component<MyProps, MyState> {
 
   componentDidMount() {

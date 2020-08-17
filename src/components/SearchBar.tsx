@@ -17,6 +17,13 @@ type MyProps = {
 };
 
 let timerId;
+
+/**
+ * Renders SearchBar
+ *
+ * @class SearchBar
+ * @extends {React.Component<MyProps, MyState>}
+ */
 class SearchBar extends React.Component<MyProps, MyState>{
   constructor(props: MyProps) {
     super(props);
@@ -57,9 +64,7 @@ class SearchBar extends React.Component<MyProps, MyState>{
   }
   handlePageClick = (pageData) => {
     const selected = pageData.selected;
-    console.log(this.state.perPage, '=====what the fuck')
     const perPage = this.state.perPage;
-
     const page = Math.ceil(selected * perPage);
     this.setState({ page });
     this.onFetchSearch();
@@ -97,12 +102,12 @@ class SearchBar extends React.Component<MyProps, MyState>{
           </div>
         </div>
         {this.state.loading ? <p className="loading__p">fetching results...</p> : ''}
-        <div className="result-data">
+        <div className="result-data">{searchResult.total_count ?
           <p>Found {searchResult && searchResult.total_count ? searchResult.total_count : 'no'}
             {' '} results...
-          </p>
+          </p> : ''}
           {(searchResult.total_count > 10) && <ReactPaginate
-            previousLabel={'previous'}
+            previousLabel={'prev'}
             nextLabel={'next'}
             pageCount={searchResult.total_count}
             marginPagesDisplayed={1}
