@@ -39,12 +39,6 @@ The App.tsx is the entry page and renders the SearchBar which has an input form,
 I used sass to indent and beautify CSS.
 > I chose not to display the searchBar at the center of the page because the UX is more appealing with the current design
 
-- ReactJS.
-- TypeScript.
-- Redux-persist to persist and rehydrate redux store.
-- ExpressJS.
-- REDIS to cache persisted data on the server-side.
-- SASS
 
 ## Installation
 Github-searcher requires 
